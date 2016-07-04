@@ -3,7 +3,7 @@ yum -y update
 echo "*filter" > /etc/sysconfig/iptables
 echo ":INPUT DROP [0:0]" >> /etc/sysconfig/iptables
 echo ":FORWARD DROP [0:0]" >> /etc/sysconfig/iptables
-echo ":OUTPUT ACCEPT [224:97643]" >> /etc/sysconfig/iptables
+echo ":OUTPUT ACCEPT [0:0]" >> /etc/sysconfig/iptables
 echo ":http - [0:0]" >> /etc/sysconfig/iptables
 echo "-A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT" >> /etc/sysconfig/iptables
 echo "-A INPUT -i lo -j ACCEPT" >> /etc/sysconfig/iptables
@@ -16,6 +16,6 @@ sudo chkconfig iptables on
 sudos service iptables start
 yum -y install httpd
 chkconfig httpd on
-
-perl -pe 's/Amazon/Motes Public/g' /var/www/error/noindex.html > /var/www/html/index.html
+INSID=`curl http://169.254.169.254/latest/meta-data/instance-id/`
+perl -pe "s/Amazon/Motes Public $INSID/g" /var/www/error/noindex.html > /var/www/html/index.html
 service httpd start
