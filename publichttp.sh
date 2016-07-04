@@ -12,8 +12,8 @@ echo "-A INPUT -s 70.117.65.133/32 -j ACCEPT" >> /etc/sysconfig/iptables
 echo "-A INPUT -p tcp -m tcp --dport 80 -j http" >> /etc/sysconfig/iptables
 echo "-A http -s 10.10.129.0/24 -j ACCEPT" >> /etc/sysconfig/iptables
 echo "COMMIT" >> /etc/sysconfig/iptables
-sudo chkconfig iptables on
-sudos service iptables start
+chkconfig iptables on
+service iptables start
 yum -y install httpd
 chkconfig httpd on
 INSID=`curl http://169.254.169.254/latest/meta-data/instance-id/`
